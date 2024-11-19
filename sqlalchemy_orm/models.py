@@ -61,6 +61,8 @@ class Auths(Base):
     LastLoginDate = Column(DateTime, nullable=True)
     CreatedDate = Column(DateTime, nullable=True)
     RoleID = Column(Integer, nullable=True)
+    TokenExpiredDate=Column(DateTime, nullable=True)
+
     
     # Relationship with Users
     users = relationship("Users", back_populates="auths")
@@ -72,7 +74,8 @@ class Otps(Base):
     OtpCode = Column(String(50), nullable=False)
     OtpExpiredTime = Column(DateTime, nullable=True)
     UserID = Column(Integer, ForeignKey("Users.UserID"), nullable=False)
-    
+    Email=Column(String(50),nullable=True)
+    CreatedTime=Column(DateTime, nullable=True)
     # Relationship with Users
     # user = relationship("Users", back_populates="otps")
 
