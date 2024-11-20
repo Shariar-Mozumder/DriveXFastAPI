@@ -1,7 +1,6 @@
 # models.py
-from datetime import datetime
 import enum
-from sqlalchemy import Enum, create_engine, Column, Integer, String, DateTime, Boolean,ForeignKey,Text,Float,SmallInteger
+from sqlalchemy import Enum, create_engine, Column, Integer, BigInteger, String, DateTime, Boolean,ForeignKey,Text,Float,SmallInteger
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
@@ -86,3 +85,28 @@ class Images(Base):
     ImageFile=Column(String(max), nullable=True)
 
     users = relationship("Users", back_populates="images")
+
+class Categories(Base):
+    __tablename__="Categories"
+
+    CategoryID=Column(Integer, primary_key=True, autoincrement=True)
+    CategoryName=Column(String(50),nullable=False)
+    CategoryType=Column(String(50),nullable=True)
+    CreateDate=Column(DateTime, nullable=True)
+    Status=Column(Integer,nullable=True)
+
+class Products(Base):
+    __tablename__="Products"
+
+    ProductID=Column(BigInteger, primary_key=True, autoincrement=True)
+    UserID=Column(Integer, ForeignKey("Users.UserID"), nullable=False)
+    CategoryID=Column(Integer, ForeignKey("Categories.CategoryID"), nullable=False)
+    Name=Column(String(50),nullable=True)
+    Description= Column(Text,nullable=True)
+    Specifications =Column(Text,nullable=True)
+    Price =Column(Float,nullable=False)
+    Quantity =Column(Integer,nullable=True)
+    IsAuction =Column(Boolean,nullable=True)
+    Status =Column(Integer,nullable=True)
+    CreatedDate =Column(DateTime,nullable=True)
+    CreatedBy = Column(Integer,nullable=True)
