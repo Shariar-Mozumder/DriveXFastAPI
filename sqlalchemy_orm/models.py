@@ -14,7 +14,6 @@ class Users(Base):
     FirstName = Column(String(50), nullable=False)
     LastName = Column(String(50), nullable=True)
     Password = Column(String(50), nullable=False)
-    ImageID = Column(Integer, ForeignKey("Images.ImageID"), nullable=True)
     RoleID = Column(Integer, nullable=True)
     Email = Column(String(50), nullable=False)
     Gender = Column(String(10), nullable=True)
@@ -26,7 +25,6 @@ class Users(Base):
 
     # Relationship
     address = relationship("Address", back_populates="users")
-    images = relationship("Images", back_populates="users")
     auths = relationship("Auths", back_populates="users")
     
 
@@ -81,10 +79,15 @@ class Otps(Base):
 class Images(Base):
     __tablename__="Images"
 
-    ImageID=Column(Integer, primary_key=True, autoincrement=True)
-    ImageFile=Column(String(max), nullable=True)
+    ImageID=Column(BigInteger, primary_key=True, autoincrement=True)
+    ImageFile1=Column(Text, nullable=True)
+    ImageFile2=Column(Text, nullable=True)
+    ImageFile3=Column(Text, nullable=True)
+    ImageFile4=Column(Text, nullable=True)
+    ImageFile5=Column(Text, nullable=True)
+    ProductID = Column(BigInteger, ForeignKey("Products.ProductID"), nullable=True)
 
-    users = relationship("Users", back_populates="images")
+    # users = relationship("Users", back_populates="images")
 
 class Categories(Base):
     __tablename__="Categories"
@@ -101,6 +104,7 @@ class Products(Base):
     ProductID=Column(BigInteger, primary_key=True, autoincrement=True)
     UserID=Column(Integer, ForeignKey("Users.UserID"), nullable=False)
     CategoryID=Column(Integer, ForeignKey("Categories.CategoryID"), nullable=False)
+    # ImageID=Column(BigInteger, ForeignKey("Images.ImageID"), nullable=True)
     Name=Column(String(50),nullable=True)
     Description= Column(Text,nullable=True)
     Specifications =Column(Text,nullable=True)
@@ -110,3 +114,5 @@ class Products(Base):
     Status =Column(Integer,nullable=True)
     CreatedDate =Column(DateTime,nullable=True)
     CreatedBy = Column(Integer,nullable=True)
+
+    # images = relationship("Images", back_populates="products")
